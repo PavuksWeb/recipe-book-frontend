@@ -1,0 +1,17 @@
+
+export interface Recipe {
+  id: string;
+  name: string;
+  image: string;
+  country: string;
+  category: string;
+  instructions: string;
+  ingredients: string[];
+}
+
+export type FilterType = "all" | "country" | "category" | "ingredient";
+
+export interface FilterParams {
+  type: FilterType;
+  value?: string;
+}
