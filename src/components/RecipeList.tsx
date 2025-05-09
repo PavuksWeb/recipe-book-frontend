@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Recipe, FilterParams } from '@/types/recipe';
 import RecipeCard from '@/components/RecipeCard';
@@ -9,8 +8,11 @@ interface RecipeListProps {
   isLoading?: boolean;
 }
 
-const RecipeList: React.FC<RecipeListProps> = ({ recipes, filter, isLoading = false }) => {
-  // Generate title based on current filter
+const RecipeList: React.FC<RecipeListProps> = ({
+  recipes,
+  filter,
+  isLoading = false,
+}) => {
   const generateTitle = () => {
     if (filter.type === 'all') {
       return 'All Recipes';

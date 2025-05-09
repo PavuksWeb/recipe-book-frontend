@@ -12,7 +12,7 @@ const RecipeInfoPage: React.FC = () => {
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
@@ -21,28 +21,28 @@ const RecipeInfoPage: React.FC = () => {
           const recipeData = await fetchRecipe(id);
           if (recipeData) {
             setRecipe(recipeData);
-            // Fetch recipes in the same category for similar recipes component
+
             const allRecipesData = await fetchRecipes({
               type: 'category',
-              value: recipeData.category
+              value: recipeData.category,
             });
             setAllRecipes(allRecipesData);
           } else {
-            toast.error("Recipe not found");
+            toast.error('Recipe not found');
             navigate('/recipes');
           }
         }
       } catch (error) {
         console.error('Error fetching recipe:', error);
-        toast.error("Failed to load recipe details. Please try again later.");
+        toast.error('Failed to load recipe details. Please try again later.');
       } finally {
         setIsLoading(false);
       }
     };
-    
+
     loadData();
   }, [id, navigate]);
-  
+
   if (isLoading) {
     return (
       <div className="container mx-auto py-8">
@@ -59,7 +59,7 @@ const RecipeInfoPage: React.FC = () => {
       </div>
     );
   }
-  
+
   if (!recipe) {
     return (
       <div className="container mx-auto py-8">
@@ -69,7 +69,7 @@ const RecipeInfoPage: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="container mx-auto py-8">
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -77,10 +77,10 @@ const RecipeInfoPage: React.FC = () => {
           <RecipeDetail recipe={recipe} />
         </div>
         <div>
-          <SimilarRecipes 
-            recipes={allRecipes} 
-            currentRecipeId={recipe?.id || ''} 
-            category={recipe?.category || ''} 
+          <SimilarRecipes
+            recipes={allRecipes}
+            currentRecipeId={recipe?.id || ''}
+            category={recipe?.category || ''}
           />
         </div>
       </div>

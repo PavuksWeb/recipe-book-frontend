@@ -1,4 +1,3 @@
-
 export interface MealDbResponse {
   meals: MealDbMeal[] | null;
 }
@@ -11,7 +10,7 @@ export interface MealDbMeal {
   strInstructions: string;
   strMealThumb: string;
   strTags?: string;
-  [key: string]: string | undefined; // For dynamic ingredient and measure properties
+  [key: string]: string | undefined;
 }
 
 export interface Recipe {
@@ -24,7 +23,7 @@ export interface Recipe {
   ingredients: string[];
 }
 
-export type FilterType = "all" | "country" | "category" | "ingredient";
+export type FilterType = 'all' | 'country' | 'category' | 'ingredient';
 
 export interface FilterParams {
   type: FilterType;

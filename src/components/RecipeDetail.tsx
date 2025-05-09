@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from '@/types/recipe';
@@ -13,16 +12,16 @@ const RecipeDetail: React.FC<RecipeDetailProps> = ({ recipe }) => {
   return (
     <div className="flex flex-col gap-6">
       <div className="relative overflow-hidden rounded-lg">
-        <img 
-          src={recipe.image} 
-          alt={recipe.name} 
+        <img
+          src={recipe.image}
+          alt={recipe.name}
           className="w-full h-[300px] object-cover"
         />
       </div>
 
       <div className="space-y-4">
         <h1 className="text-3xl font-bold">{recipe.name}</h1>
-        
+
         <Link to={`/recipes/country/${recipe.country}`}>
           <Button variant="outline" className="text-md">
             {recipe.country}
