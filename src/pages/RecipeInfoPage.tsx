@@ -1,13 +1,14 @@
-
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Recipe } from '@/types/recipe';
 import { fetchRecipe, fetchRecipes } from '@/services/api';
 import RecipeDetail from '@/components/RecipeDetail';
 import SimilarRecipes from '@/components/SimilarRecipes';
+import { toast } from '@/components/ui/sonner';
 
 const RecipeInfoPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [allRecipes, setAllRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -20,19 +21,27 @@ const RecipeInfoPage: React.FC = () => {
           const recipeData = await fetchRecipe(id);
           if (recipeData) {
             setRecipe(recipeData);
-            const allRecipesData = await fetchRecipes();
+            // Fetch recipes in the same category for similar recipes component
+            const allRecipesData = await fetchRecipes({
+              type: 'category',
+              value: recipeData.category
+            });
             setAllRecipes(allRecipesData);
+          } else {
+            toast.error("Recipe not found");
+            navigate('/recipes');
           }
         }
       } catch (error) {
         console.error('Error fetching recipe:', error);
+        toast.error("Failed to load recipe details. Please try again later.");
       } finally {
         setIsLoading(false);
       }
     };
     
     loadData();
-  }, [id]);
+  }, [id, navigate]);
   
   if (isLoading) {
     return (
@@ -70,8 +79,8 @@ const RecipeInfoPage: React.FC = () => {
         <div>
           <SimilarRecipes 
             recipes={allRecipes} 
-            currentRecipeId={recipe.id} 
-            category={recipe.category} 
+            currentRecipeId={recipe?.id || ''} 
+            category={recipe?.category || ''} 
           />
         </div>
       </div>

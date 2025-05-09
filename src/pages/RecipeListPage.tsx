@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Recipe, FilterParams } from '@/types/recipe';
 import { fetchRecipes } from '@/services/api';
 import RecipeList from '@/components/RecipeList';
+import { toast } from '@/components/ui/sonner';
 
 const RecipeListPage: React.FC = () => {
   const { filterType, filterValue } = useParams<{ 
@@ -26,8 +27,12 @@ const RecipeListPage: React.FC = () => {
       try {
         const data = await fetchRecipes(filter);
         setRecipes(data);
+        if (data.length === 0) {
+          toast.info("No recipes found for the selected filter");
+        }
       } catch (error) {
         console.error('Error fetching recipes:', error);
+        toast.error("Failed to fetch recipes. Please try again later.");
       } finally {
         setIsLoading(false);
       }
