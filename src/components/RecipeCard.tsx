@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Recipe } from '@/types/recipe';
@@ -23,12 +22,15 @@ const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
           <h3 className="font-semibold text-lg mb-1">{recipe.name}</h3>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <span>{recipe.country}</span>
-            <span>•</span>
             <span>{recipe.category}</span>
           </div>
         </CardContent>
         <CardFooter className="p-4 pt-0 text-sm">
-          <span className="text-muted-foreground">{recipe.ingredients.length} ingredients</span>
+          <span className="text-muted-foreground">
+            {recipe.ingredients.length > 0
+              ? `${recipe.ingredients.length} ingredients`
+              : ''}
+          </span>
         </CardFooter>
       </Card>
     </Link>

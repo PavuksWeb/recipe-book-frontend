@@ -14,7 +14,7 @@ const SimilarRecipes: React.FC<SimilarRecipesProps> = ({
   category,
 }) => {
   const similarRecipes = recipes.filter(
-    (recipe) => recipe.category === category && recipe.id !== currentRecipeId
+    (recipe) => recipe.id !== currentRecipeId
   );
 
   return (
